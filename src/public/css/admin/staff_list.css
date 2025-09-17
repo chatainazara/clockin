@@ -1,0 +1,9 @@
+.css .table td a {
+    color: #3182ce;
+    text-decoration: underline;
+    font-weight: normal;
+}
+
+.table td a:hover {
+    color: #1a56b3;
+}
