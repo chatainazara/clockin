@@ -5,9 +5,9 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Furima</title>
+    <title>ClockInOut</title>
     <link rel="stylesheet" href="{{ asset('css/sanitize.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/common.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/layouts/common.css') }}">
     <!-- webフォントの追加 -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -54,13 +54,6 @@
                     </li>
                     <!-- ログイン未承認ユーザー -->
                     @elseif(!is_null($user) && is_null($user->email_verified_at))
-                    <li class="header-nav__item-search">
-                        <form class="header-nav__search" action='/' method='post'>
-                            @csrf
-                            <input class="header-nav__search--window" type="text" name="search" placeholder="何かお探しですか？" value="{{$search}}"/>
-                            <button class="header-nav__search--button" type="submit">検索</button>
-                        </form>
-                    </li>
                     <li class="header-nav__item">
                         <a class="header-nav__link" href="/mypage">マイページ</a>
                     </li>
@@ -78,13 +71,6 @@
                     </li>
                     <!-- ログアウト時 -->
                     @elseif(auth()->guest())
-                    <li class="header-nav__item-search">
-                        <form class="header-nav__search" action='/' method='post'>
-                            @csrf
-                            <input class="header-nav__search--window" type="text" name="search" placeholder="何かお探しですか？" value=""/>
-                            <button class="header-nav__search--button" type="submit">検索</button>
-                        </form>
-                    </li>
                     <li class="header-nav__item">
                         <a class="header-nav__link" href="/login">マイページ</a>
                     </li>

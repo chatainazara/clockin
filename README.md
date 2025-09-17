@@ -4,7 +4,7 @@
 
 ### Docker ビルド
 
-1. git clone git@github.com:chatainazara/furima.git
+1. git clone git@github.com:chatainazara/clockin.git
 2. DockerDesktop アプリを立ち上げる
 3. docker-compose up -d --build
 
