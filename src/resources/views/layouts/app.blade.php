@@ -24,21 +24,20 @@
     <header class="header">
         <div class="header__inner">
             <div class="header-utilities">
-                <a class="header__link" href="/">
+                <a class="header__link" href="/attendance">
                     <img class="header__logo" src="{{asset('img/logo.svg')}}" alt="ロゴ">
                 </a>
                 <ul class="header-nav">
-                    <!-- ログイン時 -->
-                    @if(!is_null($user) && !is_null($user->email_verified_at))
-                    <li class="header-nav__item-search">
-                        <form class="header-nav__search" action='/' method='post'>
-                            @csrf
-                            <input class="header-nav__search--window" type="text" name="search" placeholder="何かお探しですか？" value="{{$search}}"/>
-                            <button class="header-nav__search--button" type="submit">検索</button>
-                        </form>
+                    <!-- 管理者ログイン時ログイン時 -->
+                    @if(!is_null($user) && !is_null($user->email_verified_at) && $user->role === 'admin' )
+                    <li class="header-nav__item">
+                        <a class="header-nav__link" href="/attendance">勤怠</a>
                     </li>
                     <li class="header-nav__item">
-                        <a class="header-nav__link" href="/mypage">マイページ</a>
+                        <a class="header-nav__link" href="/admin/attendance/list">勤怠一覧</a>
+                    </li>
+                    <li class="header-nav__item">
+                        <a class="header-nav__link" href="/stamp_correction_request/list">申請</a>
                     </li>
                     <li class="header-nav__item">
                         <form class="header-nav__logout" action="/logout" method="post">
@@ -46,44 +45,29 @@
                             <button class="header-nav__logout--button">ログアウト</button>
                         </form>
                     </li>
+                    <!-- 一般ユーザーログイン時 -->
+                    @elseif(!is_null($user) && !is_null($user->email_verified_at) && $user->role === 'user')
                     <li class="header-nav__item">
-                        <form class="header-nav__listing" action="/sell" method="get">
+                        <a class="header-nav__link" href="/attendance">勤怠</a>
+                    </li>
+                    <li class="header-nav__item">
+                        <a class="header-nav__link" href="/attendance/list">勤怠一覧</a>
+                    </li>
+                    <li class="header-nav__item">
+                        <a class="header-nav__link" href="/stamp_correction_request/list">申請</a>
+                    </li>
+                    <li class="header-nav__item">
+                        <form class="header-nav__logout" action="/logout" method="post">
                             @csrf
-                            <button class="header-nav__listing--button">出品</button>
+                            <button class="header-nav__logout--button">ログアウト</button>
                         </form>
                     </li>
                     <!-- ログイン未承認ユーザー -->
                     @elseif(!is_null($user) && is_null($user->email_verified_at))
                     <li class="header-nav__item">
-                        <a class="header-nav__link" href="/mypage">マイページ</a>
-                    </li>
-                    <li class="header-nav__item">
                         <form class="header-nav__logout" action="/logout" method="post">
                             @csrf
                             <button class="header-nav__logout--button">ログアウト</button>
-                        </form>
-                    </li>
-                    <li class="header-nav__item">
-                        <form class="header-nav__listing" action="/sell" method="get">
-                            @csrf
-                            <button class="header-nav__listing--button">出品</button>
-                        </form>
-                    </li>
-                    <!-- ログアウト時 -->
-                    @elseif(auth()->guest())
-                    <li class="header-nav__item">
-                        <a class="header-nav__link" href="/login">マイページ</a>
-                    </li>
-                    <li class="header-nav__item">
-                        <form class="header-nav__logout" action="/login" method="get">
-                            @csrf
-                            <button class="header-nav__logout--button">ログイン</button>
-                        </form>
-                    </li>
-                    <li class="header-nav__item">
-                        <form class="header-nav__listing" action="/login" method="get">
-                            @csrf
-                            <button class="header-nav__listing--button">出品</button>
                         </form>
                     </li>
                     @endif

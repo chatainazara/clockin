@@ -17,7 +17,7 @@ class UserSeeder extends Seeder
     {
         $param = [
             'name' => 'admin',
-            'email' => 'enju@sakamaki-forest.com',
+            'email' => 'admin@sakamaki-forest.com',
             'password' => Hash::make('adminadmin'),
             'email_verified_at' => now(),
             'role' => 'admin'

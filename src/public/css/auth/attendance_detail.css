@@ -1,0 +1,83 @@
+.attendance {
+    padding: 20px;
+    background-color: #f7f7f8;
+    font-family: "Inter", sans-serif;
+}
+
+.attendance__inner {
+    margin: 0px auto;
+    width: 60vw;
+}
+
+.ttl {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    border-left: 6px solid #000;
+    padding-left: 10px;
+}
+
+.attendance__form {
+    background: #fff;
+    border-radius: 10px;
+    padding-bottom: 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.content__row {
+    display: flex;
+    border-top: 1px solid #eee;
+    padding: 16px 20px;
+}
+
+.content__label {
+    width: 180px;
+    padding-right: 10px;
+}
+
+.content__value {
+    flex: 1;
+}
+
+.input-time {
+    padding: 5px 8px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin: 0 5px;
+}
+
+.textarea {
+    width: 100%;
+    min-height: 60px;
+    padding: 8px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    resize: none;
+}
+
+.actions {
+    text-align: right;
+    margin-top: 20px;
+    padding: 0 20px;
+}
+
+.button {
+    background: #000;
+    color: #fff;
+    border: none;
+    padding: 10px 25px;
+    font-size: 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.button:hover {
+    background: #333;
+}
+
+.error{
+    color:red;
+}

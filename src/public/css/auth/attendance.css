@@ -1,48 +1,83 @@
-body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    background: #f5f5f7;
+/* 全体レイアウト */
+.content {
+    background-color: #f3f3f5;
 }
 
-header {
-    background: #000;
-    color: #fff;
-    padding: 2% 5%;
+.content__inner{
     display: flex;
-    justify-content: space-between;
-}
-
-header nav a {
-    color: #fff;
-    margin-left: 2%;
-    text-decoration: none;
-    font-size: 1vw;
-}
-
-.container {
-    max-width: 80%;
-    margin: 5% auto;
-    background: #fff;
-    padding: 5%;
-    border-radius: 1%;
+    flex-direction: column;
+    align-items: center;
+    padding-top:25vh;
+    min-height: 100vh;
+    background-color: #f3f3f5;
+    width:60%;
+    height:50%;
+    margin:0 auto;
+    /* 薄いグレー背景 */
     text-align: center;
+    font-family: "Inter", sans-serif;
 }
 
-.badge {
-    background: #eee;
-    padding: 1% 4%;
-    border-radius: 10%;
+/* 上部のステータスバッジ */
+.content__badge {
+    display: inline-block;
+    padding: 0.8% 1.6%;
+    font-size: 0.85vw;
+    color: #555;
+    background-color: #e0e0e0;
+    border-radius: 20px;
+    margin-bottom: 3%;
 }
 
-.clock {
-    font-size: 8vw;
-    margin: 2% 0;
+/* 日付 */
+.content__date {
+    font-size: 1.2vw;
+    color: #333;
+    margin-bottom: 1%;
 }
 
-button {
-    background: #000;
-    color: #fff;
-    padding: 2% 6%;
+/* 時間 */
+.content__time {
+    font-size: 3.5vw;
+    font-weight: 800;
+    color: #000;
+    margin-bottom: 1%;
+}
+
+/* ボタン配置 */
+.content__btn {
+    display: flex;
+    flex-direction: row;
+    justify-content: center; /* ← 追加: 中央寄せ */
+    gap: 10%;
+    width: 20%;
+    height: 6vh;
+}
+
+.btn {
+    display:block;
+    padding: 1% 1%;
+    width:60%;
+    height:100%;
+    font-size: 1.1vw;
+    font-weight: 600;
     border: none;
-    border-radius: 0.5vw;
+    color:white;
+    background:black;
+    border-radius: 7px;
+    cursor: pointer;
+}
+
+.btn2 {
+    display: block;
+    padding: 1% 1%;
+    width:60%;
+    height:100%;
+    font-size: 1.1vw;
+    font-weight: 600;
+    border: none;
+    color:black;
+    background: white;
+    border-radius: 7px;
+    cursor: pointer;
 }
