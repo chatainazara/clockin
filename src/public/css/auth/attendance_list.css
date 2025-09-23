@@ -4,7 +4,7 @@
     font-family: "Inter", sans-serif;
 }
 
-.attendance__inner {
+.attendance__inner{
     margin: 0px auto;
     width: 60vw;
 }
@@ -25,7 +25,7 @@
     justify-content: no-wrap;
     margin-bottom: 3vw;
     gap: 20vw;
-    background: white;
+    background:white;
     border-radius: 8px;
 }
 
@@ -41,20 +41,14 @@
     background: #f0f0f0;
 }
 
-.pagenate__date {
-    font-size: 1vw;
-    font-weight: bold;
-    background: #fff;
-}
-
 .calender-icon {
     width: 1vw;
 }
 
-.calender{
-    border:none;
-    font-weight: bold;
+.pagenate__month {
     font-size: 1vw;
+    font-weight: bold;
+    background: #fff;
 }
 
 /* テーブル */
@@ -72,7 +66,7 @@
     font-weight: bold;
     padding: 0.7vw;
     border-bottom: 2px solid #ddd;
-    color: #737373;
+    color:#737373;
 }
 
 .attendance__table-data {
@@ -82,7 +76,7 @@
     text-align: center;
 }
 
-.attendance__table-data--link {
+.attendance__table-data--link{
     text-decoration: none;
     font-weight: bold;
     text-align: center;

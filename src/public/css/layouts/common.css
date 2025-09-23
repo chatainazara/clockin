@@ -1,6 +1,5 @@
 .header {
     background: #000;
-    height: 3vw;
     width: 100%;
 }
 
@@ -15,70 +14,36 @@
     justify-content: space-between;
     align-items: center;
     height: 100%;
+    width: 100%;
 }
 
 .header__link {
-    display: flex;
-    height: 100%;
+    display:block;
     line-height: 100%;
     align-items: center;
+    width:25%;
+    margin:1%;
 }
 
 .header__logo {
     display: inline-block;
-    margin-left: 20px;
-    height: 70%;
+    width:100%;
 }
 
 .header-nav {
     display: flex;
     justify-content: flex-end;
     height: 100%;
-    width: 70%;
+    width: 75%;
     align-items: center;
 }
 
-.header-nav__item-search {
-    display: inline-block;
-    width: 35%;
-}
-
 .header-nav__item {
-    display: inline-block;
+    display: block;
     width: 15%;
+    height:100%;
     text-align: center;
     margin-right: 5px;
-}
-
-.header-nav__search {
-    display: block;
-}
-
-.header-nav__search--window {
-    display: inline-block;
-    width: 70%;
-    height: 40px;
-    font-family: "Inter", sans-serif;
-    font-size: 24px;
-    font-weight: 400;
-    font-style: normal;
-    vertical-align: middle;
-    text-align: center;
-}
-
-.header-nav__search--button {
-    display: inline-block;
-    height: 60%;
-    border: none;
-    border-radius: 3px;
-    font-family: "Inter", sans-serif;
-    font-size: 24px;
-    font-weight: 400;
-    font-style: normal;
-    background: #ffffff;
-    color: #000000;
-    cursor: pointer;
-    vertical-align: middle;
 }
 
 .header-nav__link {
@@ -87,8 +52,9 @@
     border: none;
     background: transparent;
     color: #fff;
-    font-size: 24px;
+    font-size: 1.4vw;
     cursor: pointer;
+    width: 100%;
 }
 
 .header-nav__logout {
@@ -101,107 +67,6 @@
     font-family: "Inter", sans-serif;
     border: none;
     background: transparent;
-    font-size: 24px;
+    font-size: 1.2vw;
     cursor: pointer;
-}
-
-.header-nav__listing {
-    display: block;
-}
-
-.header-nav__listing--button {
-    height: 60%;
-    border: none;
-    border-radius: 3px;
-    font-family: "Inter", sans-serif;
-    font-size: 24px;
-    font-weight: 400;
-    font-style: normal;
-    background: #ffffff;
-    color: #000000;
-    cursor: pointer;
-}
-
-/* タブレット対応 */
-@media screen and (max-width: 1400px) {
-
-    .header__logo {
-        display: inline-block;
-        margin-left: 20px;
-        height: 30%;
-    }
-
-    .header-nav {
-        display: flex;
-        justify-content: flex-end;
-        height: 100%;
-        width: 100%;
-        align-items: center;
-    }
-
-    .header-nav__item-search {
-        display: inline-block;
-        width: 50%;
-    }
-
-    .header-nav__search--window {
-        display: inline-block;
-        width: 70%;
-        height: 27px;
-        font-family: "Inter", sans-serif;
-        font-size: 12px;
-        font-weight: 400;
-        font-style: normal;
-        vertical-align: middle;
-        text-align: center;
-    }
-
-    .header-nav__search--button {
-        display: inline-block;
-        height: 60%;
-        border: none;
-        border-radius: 3px;
-        font-family: "Inter", sans-serif;
-        font-size: 12px;
-        font-weight: 400;
-        font-style: normal;
-        background: #ffffff;
-        color: #000000;
-        cursor: pointer;
-        vertical-align: middle;
-    }
-
-    .header-nav__link {
-        text-decoration: none;
-        font-family: "Inter", sans-serif;
-        border: none;
-        background: transparent;
-        color: #fff;
-        font-size: 12px;
-        cursor: pointer;
-    }
-
-    .header-nav__logout--button {
-        color: #fff;
-        text-decoration: none;
-        font-family: "Inter", sans-serif;
-        border: none;
-        background: transparent;
-        font-size: 12px;
-        cursor: pointer;
-    }
-
-    .header-nav__listing--button {
-        height: 60%;
-        border: none;
-        border-radius: 3px;
-        font-family: "Inter", sans-serif;
-        font-size: 12px;
-        font-weight: 400;
-        font-style: normal;
-        background: #ffffff;
-        color: #000000;
-        cursor: pointer;
-    }
-
 }

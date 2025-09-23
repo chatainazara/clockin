@@ -67,7 +67,7 @@ MAIL_FROM_NAME="${APP_NAME}"
 
 ## ER 図
 
-![ER図](src/document/er_diagram.png)
+![ER図](src/document/ER_diagram.drowio.png)
 
 ## URL
 

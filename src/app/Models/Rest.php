@@ -11,8 +11,14 @@ class Rest extends Model
 
     protected $fillable = [
         'work_id',
-        'break_start_at',
-        'break_end_at',
+        'rest_start_at',
+        'rest_end_at',
+    ];
+
+    // 日付カラムとして自動キャスト
+    protected $dates = [
+        'rest_start_at',
+        'rest_end_at',
     ];
 
     public function work()

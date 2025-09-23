@@ -26,4 +26,17 @@ class WorkApplication extends Model
     {
         return $this->hasMany(RestApplication::class);
     }
+
+    // work 経由で user を取れるようにする
+    public function user()
+    {
+        return $this->hasOneThrough(
+            User::class,
+            Work::class,
+            'id',       // works.id
+            'id',       // users.id
+            'work_id',  // work_applications.work_id
+            'user_id'   // works.user_id
+        );
+    }
 }
