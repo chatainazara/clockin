@@ -1,0 +1,91 @@
+.attendance {
+    padding: 1vw;
+    background-color: #f7f7f8;
+    font-family: "Inter", sans-serif;
+    width:100vw;
+    height:100vh;
+}
+
+.attendance__inner {
+    margin: 0px auto;
+    width: 50vw;
+}
+
+.ttl {
+    font-size: 1.8vw;
+    font-weight: bold;
+    margin-bottom: 3vw;
+    border-left: 5px solid #000;
+    padding-left: 0.5vw;
+}
+
+.attendance__form {
+    background: #fff;
+    border-radius: 0.5vw;
+    padding-bottom: 1vw;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    margin-bottom: 3vw;
+}
+
+.content__row {
+    display: flex;
+    border-top: 1px solid #eee;
+    padding: 1.5vw 1vw;
+}
+
+.content__label {
+    width: 15vw;
+    padding-right: 2vw;
+    font-size: 0.9vw;
+}
+
+.content__value {
+    flex: 1;
+    font-size: 0.9vw;
+}
+
+.input-time {
+    padding: 0.25vw 0.4vw;
+    font-size: 0.7vw;
+    border: 1px solid #ccc;
+    border-radius: 0.25vw;
+    margin: 0 0.25vw;
+}
+
+.textarea {
+    width: 100%;
+    min-height: 3vw;
+    padding: 0.4vw;
+    font-size: 0.7vw;
+    border: 1px solid #ccc;
+    border-radius: 0.25vw;
+    resize: none;
+}
+
+.actions {
+    text-align: right;
+    margin-top: 1vw;
+    padding: 0 1vw;
+}
+
+.button {
+    background: #000;
+    color: #fff;
+    border: none;
+    padding: 0.5vw 1.25vw;
+    font-size: 1.25vw;
+    border-radius: 0.25vw;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.button2 {
+    background: #505050;
+    color: #fff;
+    border: none;
+    padding: 0.5vw 1.25vw;
+    font-size: 1.25vw;
+    border-radius: 0.25vw;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
