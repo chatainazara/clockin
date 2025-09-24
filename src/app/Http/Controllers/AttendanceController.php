@@ -185,6 +185,8 @@ class AttendanceController extends Controller
 
             // 2. 休憩修正申請を作成
             foreach ($request->input('rest_applications', []) as $restApp) {
+                // dd($restApp);
+                // dd($request->all());
                 $restStart = $restApp['rest_start_at']
                     ? Carbon::parse($workDate . ' ' . $restApp['rest_start_at'])
                     : null;

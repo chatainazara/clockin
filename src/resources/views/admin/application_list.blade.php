@@ -33,6 +33,7 @@
             </thead>
             <tbody>
                 @foreach($applications as $app)
+                @if($app->user->role !== 'admin')
                 <tr class="content-list__row">
                     <td class="content-list__data">{{ $app->approve_at ? '承認済み' : '承認待ち' }}</td>
                     <td class="content-list__data">{{ $app->work->user->name }}</td>
@@ -40,9 +41,10 @@
                     <td class="content-list__data">{{ $app->reason }}</td>
                     <td class="content-list__data">{{ \Carbon\Carbon::parse($app->created_at)->format('Y/m/d') }}</td>
                     <td class="content-list__data">
-                        <a href="{{ url('/stamp_correction_request/'.$app->id) }}" class="content-list__link">詳細</a>
+                        <a href="{{'/stamp_correction_request/approve/'.$app->id }}" class="content-list__link">詳細</a>
                     </td>
                 </tr>
+                @endif
                 @endforeach
             </tbody>
         </table>

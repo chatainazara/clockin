@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Laravel\Fortify\Http\Controllers\AuthenticatedSessionController;
 use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\AdminAttendanceController;
-// use App\Http\Controllers\WorkApplicationController;
+use App\Http\Controllers\WorkApplicationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -36,6 +36,9 @@ Route::middleware(['auth','role:admin'])->group(function () {
     Route::get('/admin/attendance/list', [AdminAttendanceController::class, 'list'])->name('admin.attendance.list');
     Route::get('/attendance/{id}', [AdminAttendanceController::class, 'show'])->name('admin.attendance.show');
     Route::get('/stamp_correction_request/list', function () {});//一般ユーザーと同じパスを使用
+    Route::get('/stamp_correction_request/approve/{attendance_correct_request_id}', [WorkApplicationController::class,'approveView']);
+    Route::post('/work_applications/{id}/approve', [WorkApplicationController::class, 'approve'])
+        ->name('work_applications.approve');
 });
 
 
@@ -49,10 +52,6 @@ Route::get('/admin/staff/list', function () {
 
 Route::get('/admin/attendance/staff/{id}', function () {
     return view('admin.staff_detail');
-});
-
-Route::get('/stamp_correction_request/approve/{attendance_correct_request_id}', function () {
-    return view('admin.request_approve');
 });
 
 // mailhogによる認証ルート

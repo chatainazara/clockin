@@ -12,8 +12,8 @@ class RestApplication extends Model
     protected $fillable = [
         'work_application_id',
         'rest_id',
-        'break_start_at',
-        'break_end_at',
+        'rest_start_at',
+        'rest_end_at',
     ];
 
         public function rest()
