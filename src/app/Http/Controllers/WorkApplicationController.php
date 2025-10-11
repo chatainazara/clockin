@@ -7,10 +7,52 @@ use Illuminate\Http\Request;
 use App\Models\WorkApplication;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
+use App\Http\Requests\ApplicationRequest;
+use App\Models\Work;
+use App\Models\RestApplication;
 
 class WorkApplicationController extends Controller
 {
-    public function index(Request $request)
+    public function application(ApplicationRequest $request)
+    {
+        // work_id から Work を取得
+        $work = Work::findOrFail($request->input('work_id'));
+        DB::transaction(function () use ($request, $work) {
+            $clockIn  = $request->input('work_application.clock_in_at');
+            $clockOut = $request->input('work_application.clock_out_at');
+            // 勤務日 (DATE型) に基づいてDATETIMEを生成
+            $workDate = $work->work_date;
+            $clockInAt  = $clockIn  ? Carbon::parse($workDate . ' ' . $clockIn)  : null;
+            $clockOutAt = $clockOut ? Carbon::parse($workDate . ' ' . $clockOut) : null;
+            // 1. 出退勤修正申請を作成
+            $workApp = WorkApplication::create([
+                'work_id'      => $work->id,
+                'clock_in_at'  => $clockInAt,
+                'clock_out_at' => $clockOutAt,
+                'reason'       => $request->input('work_application.reason'),
+            ]);
+            // 2. 休憩修正申請を作成
+            foreach ($request->input('rest_applications', []) as $restApp) {
+                $restStart = $restApp['rest_start_at']
+                    ? Carbon::parse($workDate . ' ' . $restApp['rest_start_at'])
+                    : null;
+                $restEnd = $restApp['rest_end_at']
+                    ? Carbon::parse($workDate . ' ' . $restApp['rest_end_at'])
+                    : null;
+                    if($restStart && $restEnd){
+                        RestApplication::create([
+                        'work_application_id' => $workApp->id,
+                        'rest_id'             => $restApp['rest_id'] ?: null,
+                        'rest_start_at'       => $restStart,
+                        'rest_end_at'         => $restEnd,
+                    ]);
+                }
+            }
+        });
+        return redirect('/attendance');
+    }
+
+    public function adminIndex(Request $request)
     {
         $status = $request->query('status', 'pending');
         $query = WorkApplication::with(['work.user'])
@@ -24,30 +66,42 @@ class WorkApplicationController extends Controller
         return view('admin.application_list', compact('applications', 'status'));
     }
 
+    public function userIndex(Request $request)
+    {
+        $status = $request->query('status', 'pending');
+        $query = WorkApplication::with(['work.user'])
+                ->whereHas('work', function ($q) {
+                    $q->where('user_id', auth()->id()); // 現在ログイン中のユーザー
+                })
+            ->orderBy('created_at', 'desc');
+        if ($status === 'pending') {
+            $query->whereNull('approve_at');
+        } elseif ($status === 'approved') {
+            $query->whereNotNull('approve_at');
+        }
+        $applications = $query->get();
+        return view('auth.application_list', compact('applications', 'status'));
+    }
+
     public function approveView(Request $request,$attendance_correct_request_id){
         $id = $attendance_correct_request_id;
         $workApp = WorkApplication::with('rest_applications','work.user')->where('id',$id)->first();
-                // dd($workApp);
         return view('admin.approve',compact('workApp'));
     }
 
-
-
     public function approve(Request $request, $id)
     {
-        try {
+        // try {
             $workApp = WorkApplication::with(['work.rests', 'rest_applications'])->findOrFail($id);
 
             // 既に承認済み
-            if ($workApp->approve_at) {
-                return response()->json([
-                    'status' => 'already_approved',
-                    'message' => 'この申請は既に承認済みです。'
-                ]);
-            }
-
+            // if ($workApp->approve_at) {
+            //     return response()->json([
+            //         'status' => 'already_approved',
+            //         'message' => 'この申請は既に承認済みです。'
+            //     ]);
+            // }
             $work = $workApp->work;
-
             // 出退勤反映
             $work->update([
                 'clock_in_at' => $workApp->clock_in_at,
@@ -94,12 +148,12 @@ class WorkApplicationController extends Controller
                 'rests' => $allRests,
             ]);
 
-        } catch (\Throwable $e) {
-            return response()->json([
-                'status' => 'error',
-                'message' => $e->getMessage()
-            ], 500);
-        }
+        // } catch (\Throwable $e) {
+        //     return response()->json([
+        //         'status' => 'error',
+        //         'message' => $e->getMessage()
+        //     ], 500);
+        // }
     }
 
 }

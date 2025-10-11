@@ -14,6 +14,7 @@ class Work extends Model
         'work_date',
         'clock_in_at',
         'clock_out_at',
+        'remark',
     ];
 
     public function user()

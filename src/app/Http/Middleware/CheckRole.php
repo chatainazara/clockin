@@ -34,14 +34,19 @@ class CheckRole
         // --- 特別処理: /stamp_correction_request/list の場合 ---
         if ($request->path()==='stamp_correction_request/list') {
             if ($user->role === 'admin') {
-            $controller = app(WorkApplicationController::class);
-            $response = $controller->index($request);
-            // Response が null の場合に備えてラップ
-            return $response instanceof \Illuminate\Http\Response
-                ? $response
-                : response($response);
+                $controller = app(WorkApplicationController::class);
+                $response = $controller->adminIndex($request);
+                // Response が null の場合に備えてラップ
+                return $response instanceof \Illuminate\Http\Response
+                    ? $response
+                    : response($response);
             } elseif ($user->role === 'user') {
-                return response()->view('auth.application_list');
+                $controller = app(WorkApplicationController::class);
+                $response = $controller->userIndex($request);
+                // Response が null の場合に備えてラップ
+                return $response instanceof \Illuminate\Http\Response
+                    ? $response
+                    : response($response);
             }
             abort(403, 'Unauthorized');
         }

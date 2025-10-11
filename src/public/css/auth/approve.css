@@ -1,0 +1,9 @@
+.attention{
+    font-family: "Inter", sans-serif;
+    text-align: right;
+}
+
+.attention__text{
+    color:red;
+    font-size: 0.9vw;
+}

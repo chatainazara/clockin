@@ -13,7 +13,7 @@
             {{-- 前日ボタン --}}
             <a class="pagenate" href="/admin/attendance/list?date={{ $date->copy()->subDay()->toDateString() }}" >&larr; 前日</a>
             {{-- カレンダー入力 --}}
-            <form class="pagenate__date" method="GET" action="{{ route('admin.attendance.list') }}" style="display:inline;">
+            <form class="pagenate__date" method="GET" action="/admin/attendance/list" style="display:inline;">
                 <img class="calender-icon" src="{{asset('img/icon1.png')}}">
                 <input
                     class="calender"
@@ -48,7 +48,7 @@
                     <td class="attendance__table-data">{{ $work->rest_display }}</td>
                     <td class="attendance__table-data">{{ $work->work_display }}</td>
                     <td class="attendance__table-data">
-                        <a class="attendance__table-data--link" href="">
+                        <a class="attendance__table-data--link" href="/admin/attendance/{{$work->id}}">
                             @if($work->id)
                             詳細
                             @endif

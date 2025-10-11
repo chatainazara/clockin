@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('css')
+<!-- 共通 -->
 <link rel="stylesheet" href="{{ asset('css/admin/application_list.css') }}">
 @endsection
 
@@ -22,7 +23,7 @@
 
         <table class="content-list__table">
             <thead>
-                <tr class="content-list__row">
+                <tr>
                     <th class="content-list__header">状態</th>
                     <th class="content-list__header">名前</th>
                     <th class="content-list__header">対象日時</th>
@@ -33,18 +34,16 @@
             </thead>
             <tbody>
                 @foreach($applications as $app)
-                @if($app->user->role !== 'admin')
                 <tr class="content-list__row">
                     <td class="content-list__data">{{ $app->approve_at ? '承認済み' : '承認待ち' }}</td>
                     <td class="content-list__data">{{ $app->work->user->name }}</td>
                     <td class="content-list__data">{{ \Carbon\Carbon::parse($app->work->work_date)->format('Y/m/d') }}</td>
-                    <td class="content-list__data-reason">{{ $app->reason }}</td>
+                    <td class="content-list__data">{{ $app->reason }}</td>
                     <td class="content-list__data">{{ \Carbon\Carbon::parse($app->created_at)->format('Y/m/d') }}</td>
                     <td class="content-list__data">
-                        <a href="/stamp_correction_request/approve/{{$app->id}}" class="content-list__link">詳細</a>
+                        <a href="/attendance/detail/{{$app->work_id}}" class="content-list__link">詳細</a>
                     </td>
                 </tr>
-                @endif
                 @endforeach
             </tbody>
         </table>

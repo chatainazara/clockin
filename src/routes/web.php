@@ -7,6 +7,7 @@ use Laravel\Fortify\Http\Controllers\AuthenticatedSessionController;
 use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\AdminAttendanceController;
 use App\Http\Controllers\WorkApplicationController;
+use App\Http\Controllers\StaffController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,7 +26,7 @@ Route::middleware(['auth', 'role:user'])->group(function () {
     Route::post('/attendance/action', [AttendanceController::class, 'action']);
     Route::get('/attendance/list', [AttendanceController::class,'list']);
     Route::get('/attendance/detail/{id}', [AttendanceController::class,'detailShow']);
-    Route::post('/attendance/detail/{id}', [AttendanceController::class,'application']);
+    Route::post('/attendance/detail/{id}', [WorkApplicationController::class,'application']);
     Route::get('/stamp_correction_request/list', function () {});
 });
 
@@ -33,25 +34,16 @@ Route::middleware(['auth', 'role:user'])->group(function () {
 Route::get('/admin/login', function () {return view('admin.login');})->middleware('guest');
 Route::post('/admin/login', [AuthenticatedSessionController::class, 'store'])->middleware('guest');
 Route::middleware(['auth','role:admin'])->group(function () {
-    Route::get('/admin/attendance/list', [AdminAttendanceController::class, 'list'])->name('admin.attendance.list');
-    Route::get('/attendance/{id}', [AdminAttendanceController::class, 'show'])->name('admin.attendance.show');
-    Route::get('/stamp_correction_request/list', function () {});//一般ユーザーと同じパスを使用
-    Route::get('/stamp_correction_request/approve/{attendance_correct_request_id}', [WorkApplicationController::class,'approveView']);
+    Route::get('/admin/attendance/list', [AdminAttendanceController::class, 'list']);
+    Route::get('/admin/attendance/{id}',  [AdminAttendanceController::class, 'show']);
+    Route::post('/admin/attendance/{id}',  [AdminAttendanceController::class, 'fix']);
     Route::post('/work_applications/{id}/approve', [WorkApplicationController::class, 'approve'])
         ->name('work_applications.approve');
-});
-
-
-// Route::get('admin/attendance/{id}', function () {
-//     return view('admin.attendance_detail');
-// });
-
-Route::get('/admin/staff/list', function () {
-    return view('admin.staff_list');
-});
-
-Route::get('/admin/attendance/staff/{id}', function () {
-    return view('admin.staff_detail');
+    Route::get('/admin/staff/list', [StaffController::class, 'list']);
+    Route::get('/admin/attendance/staff/{id}',  [StaffController::class, 'detail']);
+    Route::post('/admin/attendance/staff/{id}',  [StaffController::class, 'csv']);
+    Route::get('/stamp_correction_request/list', function () {});//一般ユーザーと同じパスを使用
+    Route::get('/stamp_correction_request/approve/{attendance_correct_request_id}', [WorkApplicationController::class,'approveView']);
 });
 
 // mailhogによる認証ルート
