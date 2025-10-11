@@ -19,8 +19,8 @@ class CreateWorksTable extends Migration
             $table->date('work_date');
             $table->timestamp('clock_in_at')->nullable();
             $table->timestamp('clock_out_at')->nullable();
+            $table->string('remark')->nullable();
             $table->timestamps();
-
             $table->unique(['user_id', 'work_date']);
         });
     }

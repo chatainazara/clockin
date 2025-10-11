@@ -24,20 +24,29 @@
     <header class="header">
         <div class="header__inner">
             <div class="header-utilities">
+                <!-- 管理者ログイン時のヘッダーロゴ -->
+                @if(!is_null($user) && !is_null($user->email_verified_at) && $user->role === 'admin' )
+                <a class="header__link" href="/admin/attendance/list">
+                    <img class="header__logo" src="{{asset('img/logo.svg')}}" alt="ロゴ">
+                </a>
+                <!-- 一般ユーザーログイン時のヘッダーロゴ -->
+                @else
                 <a class="header__link" href="/attendance">
                     <img class="header__logo" src="{{asset('img/logo.svg')}}" alt="ロゴ">
                 </a>
+                @endif
+
                 <ul class="header-nav">
                     <!-- 管理者ログイン時ログイン時 -->
                     @if(!is_null($user) && !is_null($user->email_verified_at) && $user->role === 'admin' )
                     <li class="header-nav__item">
-                        <a class="header-nav__link" href="/attendance">勤怠</a>
-                    </li>
-                    <li class="header-nav__item">
                         <a class="header-nav__link" href="/admin/attendance/list">勤怠一覧</a>
                     </li>
                     <li class="header-nav__item">
-                        <a class="header-nav__link" href="/stamp_correction_request/list">申請</a>
+                        <a class="header-nav__link" href="/admin/staff/list">スタッフ一覧</a>
+                    </li>
+                    <li class="header-nav__item">
+                        <a class="header-nav__link" href="/stamp_correction_request/list">申請一覧</a>
                     </li>
                     <li class="header-nav__item">
                         <form class="header-nav__logout" action="/logout" method="post">

@@ -64,6 +64,14 @@
     color:#737373;
 }
 
+.content-list__data-reason {
+    padding: 1vw;
+    font-size: 0.9vw;
+    border-bottom: 1px solid #eee;
+    color: #737373;
+    width:30vw;
+}
+
 .content-list__link {
     color: #000;
     font-weight: bold;
