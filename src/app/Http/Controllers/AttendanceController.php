@@ -20,7 +20,11 @@ class AttendanceController extends Controller
         ->where('user_id', Auth::id())
         ->whereDate('work_date', $today)
         ->first();
-    return view('auth.attendance', compact('todayWork'));
+    $leaveWork = false;
+    if ($todayWork && $todayWork->clock_out_at) {
+        $leaveWork = true;
+    }
+    return view('auth.attendance', compact('todayWork','leaveWork'));
     }
 
     public function action(Request $request)
@@ -55,10 +59,6 @@ class AttendanceController extends Controller
                         'work_id' => $todayWork->id,
                         'rest_start_at' => now(),
                     ]);
-                    // if (!$rest) {
-                    //     // デバッグ用: create が失敗した場合
-                    //     dd('Rest create failed');
-                    // }
                 }
                 break;
             case 'restEnd':

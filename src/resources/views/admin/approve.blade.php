@@ -81,7 +81,7 @@
                 @if($workApp->approve_at)
                     <button class="button2" disabled>承認済み</button>
                 @else
-                    <button id="approveBtn" class="button" data-route="{{ route('work_applications.approve', $workApp->id) }}">
+                    <button id="approveBtn" class="button" data-route="/work_applications/{{$workApp->id}}/approve">
                         承認
                     </button>
                 @endif

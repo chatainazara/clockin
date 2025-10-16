@@ -28,30 +28,28 @@ class FortifyServiceProvider extends ServiceProvider
     public function register(): void{
 
         $this->app->instance(LogoutResponse::class, new class implements LogoutResponse {
-        public function toResponse($request)
-        {
-            return redirect('/login');
-        }
+            public function toResponse($request){
+                return redirect('/login');
+            }
         });
 
         $this->app->instance(LoginResponse::class, new class implements LoginResponse {
-            public function toResponse($request)
-            {
+            public function toResponse($request){
                 $user = $request->user();
                 if ($user->role === 'admin') {
                     return redirect('/admin/attendance/list');
                 }
-                if ($user->role === 'user') {
+                if ($user->role === 'user' && is_null($user->email_verified_at)) {
+                    return redirect('/email/verify');
+                }else{
                     return redirect('/attendance');
                 }
                 return redirect('/login');
             }
         });
 
-
         $this->app->instance(RegisterResponse::class, new class implements RegisterResponse {
-            public function toResponse($request)
-            {
+            public function toResponse($request){
                  // 登録直後フラグをセッションにセット
                 session(['just_registered' => true]);
                 return redirect()->route('verification.notice')
@@ -63,8 +61,7 @@ class FortifyServiceProvider extends ServiceProvider
     /**
      * Bootstrap any application services.
      */
-    public function boot(): void
-    {
+    public function boot(): void{
         Fortify::createUsersUsing(CreateNewUser::class);
         Fortify::registerView(function () {
             return view('register');
@@ -78,23 +75,10 @@ class FortifyServiceProvider extends ServiceProvider
         });
 
         RateLimiter::for('login', function (Request $request) {
-            $request =\App::make(LoginRequest::class);
+            $request = app(LoginRequest::class);
             $email = (string) $request->email;
             return Limit::perMinute(10)->by($email . $request->ip());
         });
-
-        // Fortify::authenticateUsing(function (Request $request) {
-        //     $user = \App\Models\User::where('email', $request->email)->first();
-        //     if ($user && Hash::check($request->password, $user->password)) {
-        //         if ($request->is('admin/login')) {
-        //             return $user->role === 'admin' ? $user : null;
-        //         }
-        //         if ($request->is('login')) {
-        //             return $user->role === 'user' ? $user : null;
-        //         }
-        //     }
-        //     return null;
-        // });
 
         Fortify::authenticateUsing(function (Request $request) {
             $user = User::where('email', $request->email)->first();
@@ -109,9 +93,5 @@ class FortifyServiceProvider extends ServiceProvider
             }
             return null; // role が一致しない場合はログイン不可
         });
-
-
-
-
     }
 }

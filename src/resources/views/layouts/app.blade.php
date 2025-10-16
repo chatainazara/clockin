@@ -16,11 +16,14 @@
     @yield('css')
 </head>
 
-<body>
     @php
     $user = auth()->user();
     @endphp
-
+@if($user)
+<body class="back">
+@else
+<body>
+@endif
     <header class="header">
         <div class="header__inner">
             <div class="header-utilities">
@@ -30,8 +33,13 @@
                     <img class="header__logo" src="{{asset('img/logo.svg')}}" alt="ロゴ">
                 </a>
                 <!-- 一般ユーザーログイン時のヘッダーロゴ -->
-                @else
+                @elseif(!is_null($user) && !is_null($user->email_verified_at) && $user->role === 'user')
                 <a class="header__link" href="/attendance">
+                    <img class="header__logo" src="{{asset('img/logo.svg')}}" alt="ロゴ">
+                </a>
+                <!--　未認証ユーザーがロゴを押しても認証誘導画面にしかならない　-->
+                @else
+                <a class="header__link" href="/email/verify">
                     <img class="header__logo" src="{{asset('img/logo.svg')}}" alt="ロゴ">
                 </a>
                 @endif
@@ -56,12 +64,18 @@
                     </li>
                     <!-- 一般ユーザーログイン時 -->
                     @elseif(!is_null($user) && !is_null($user->email_verified_at) && $user->role === 'user')
+                    @if(!empty($leaveWork))
+                    <li class="header-nav__item">
+                        <a class="header-nav__link" href="/attendance/list">今月の出勤一覧</a>
+                    </li>
+                    @else
                     <li class="header-nav__item">
                         <a class="header-nav__link" href="/attendance">勤怠</a>
                     </li>
                     <li class="header-nav__item">
                         <a class="header-nav__link" href="/attendance/list">勤怠一覧</a>
                     </li>
+                    @endif
                     <li class="header-nav__item">
                         <a class="header-nav__link" href="/stamp_correction_request/list">申請</a>
                     </li>
@@ -74,10 +88,7 @@
                     <!-- ログイン未承認ユーザー -->
                     @elseif(!is_null($user) && is_null($user->email_verified_at))
                     <li class="header-nav__item">
-                        <form class="header-nav__logout" action="/logout" method="post">
-                            @csrf
-                            <button class="header-nav__logout--button">ログアウト</button>
-                        </form>
+                        <!-- 何も表示しない -->
                     </li>
                     @endif
                 </ul>

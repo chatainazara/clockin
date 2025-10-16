@@ -91,25 +91,14 @@ class WorkApplicationController extends Controller
 
     public function approve(Request $request, $id)
     {
-        // try {
             $workApp = WorkApplication::with(['work.rests', 'rest_applications'])->findOrFail($id);
-
-            // 既に承認済み
-            // if ($workApp->approve_at) {
-            //     return response()->json([
-            //         'status' => 'already_approved',
-            //         'message' => 'この申請は既に承認済みです。'
-            //     ]);
-            // }
             $work = $workApp->work;
             // 出退勤反映
             $work->update([
                 'clock_in_at' => $workApp->clock_in_at,
                 'clock_out_at' => $workApp->clock_out_at,
             ]);
-
             $allRests = [];
-
             // 休憩反映
             foreach ($workApp->rest_applications as $restApp) {
                 if ($restApp->rest_id) { // 既存
@@ -137,23 +126,13 @@ class WorkApplicationController extends Controller
                     ];
                 }
             }
-
             // 承認日時セット
             $workApp->update(['approve_at' => now()]);
-
             return response()->json([
                 'status' => 'ok',
                 'clock_in_at' => $work->clock_in_at ? Carbon::parse($work->clock_in_at)->format('H:i') : null,
                 'clock_out_at' => $work->clock_out_at ? Carbon::parse($work->clock_out_at)->format('H:i') : null,
                 'rests' => $allRests,
             ]);
-
-        // } catch (\Throwable $e) {
-        //     return response()->json([
-        //         'status' => 'error',
-        //         'message' => $e->getMessage()
-        //     ], 500);
-        // }
     }
-
 }
