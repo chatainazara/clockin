@@ -1,15 +1,15 @@
 .content {
     display: block;
     text-align: center;
-    margin-top: 10%;
+    margin-top: 10vw;
     align-items: center;
-    width: 50%;
-    margin: 10% auto;
+    width: 50vw;
+    margin: 10vw auto;
 }
 
 .content__text {
     font-family: "Inter", sans-serif;
-    font-size: 24px;
+    font-size: 1.4vw;
     font-weight: 400;
     font-style: normal;
     color: #000000;
@@ -18,21 +18,20 @@
 .content__link {
     display: block;
     background: #D9D9D9;
-    padding-top: 23px;
-    width: 257px;
-    height: 69px;
+    padding-top: 1.4vw;
+    width: 18vw;
+    height: 4.5vw;
     border: none;
-    border-radius: 10px;
+    border-radius: 0.5vw;
     font-family: "Inter", sans-serif;
-    font-size: 24px;
+    font-size: 1.4vw;
     font-weight: 400;
     font-style: normal;
     color: #000000;
     cursor: pointer;
-    margin-top: 20px;
     text-align: center;
     line-height: 100%;
-    margin: 30px auto;
+    margin: 3vw auto;
 }
 
 .content__form {
@@ -43,9 +42,9 @@
     border: none;
     background-color: white;
     font-family: "Inter", sans-serif;
-    font-size: 20px;
+    font-size: 1.2vw;
     font-weight: 200;
     font-style: normal;
     color: #0073CC;
-    margin-top: 40px;
+    margin-top: 2vw;
 }

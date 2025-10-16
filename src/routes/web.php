@@ -37,8 +37,7 @@ Route::middleware(['auth','role:admin'])->group(function () {
     Route::get('/admin/attendance/list', [AdminAttendanceController::class, 'list']);
     Route::get('/admin/attendance/{id}',  [AdminAttendanceController::class, 'show']);
     Route::post('/admin/attendance/{id}',  [AdminAttendanceController::class, 'fix']);
-    Route::post('/work_applications/{id}/approve', [WorkApplicationController::class, 'approve'])
-        ->name('work_applications.approve');
+    Route::post('/work_applications/{id}/approve', [WorkApplicationController::class, 'approve']);
     Route::get('/admin/staff/list', [StaffController::class, 'list']);
     Route::get('/admin/attendance/staff/{id}',  [StaffController::class, 'detail']);
     Route::post('/admin/attendance/staff/{id}',  [StaffController::class, 'csv']);

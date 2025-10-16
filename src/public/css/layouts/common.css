@@ -1,3 +1,7 @@
+.back{
+    background-color: #f7f7f8;
+}
+
 .header {
     background: #000;
     width: 100%;
@@ -67,6 +71,6 @@
     font-family: "Inter", sans-serif;
     border: none;
     background: transparent;
-    font-size: 1.2vw;
+    font-size: 1.4vw;
     cursor: pointer;
 }
