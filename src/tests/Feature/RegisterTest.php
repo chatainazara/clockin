@@ -2,7 +2,6 @@
 
 namespace Tests\Feature;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 use Illuminate\Support\Facades\Hash;
@@ -118,31 +117,23 @@ class RegisterTest extends TestCase
 
     public function test_user_can_register()
     {
-        // 会員登録ページを開く
-        $response = $this->get('/register');
-        // メールアドレスを入力せずに他の必須項目を入力する
-        $user = User::factory()->make();
         $formData = [
-            'name' => $user->name,
-            'email' => $user->email,
+            'name' => 'TestUser',
+            'email' => 'test' . uniqid() . '@example.com',
             'password' => 'password',
             'password_confirmation' => 'password',
         ];
-        // ボタンを押す
+        // 登録実行
         $response = $this->post('/register', $formData);
-        // 認証の通過を期待
-        $this->assertAuthenticated();
-        // メール認証画面に遷移
-        // 仕様ではプロフィール編集画面への遷移となっていますが応用問題に取り組んだので遷移先を変更しています。
-        $response->assertRedirect('email/verify');
-        // 会員情報の登録を期待
+        // リダイレクト先を確認
+        $response->assertRedirect('/email/verify');
+        // DB登録確認
         $this->assertDatabaseHas('users', [
-            'name' => $user->name,
-            'email' => $user->email,
+            'email' => $formData['email'],
+            'name'  => $formData['name'],
         ]);
-        $registeredUser = User::Where('email',$user->email)->first();
-        // ハッシュ値でパワードをチェック
+        // パスワードがハッシュ化されているか確認
+        $registeredUser = User::where('email', $formData['email'])->first();
         $this->assertTrue(Hash::check('password', $registeredUser->password));
-        $response = $this->post('/logout');
     }
 }

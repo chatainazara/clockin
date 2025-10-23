@@ -145,7 +145,7 @@ class AttendanceController extends Controller
         // work_idがあってapprove_atに値がなければ以下
         $workApp = WorkApplication::with('work.user','rest_applications')->where('work_id', $id)->whereNull('approve_at')->first();
         if($workApp){
-            return view('auth.approve',compact('workApp'));
+            return view('auth.application',compact('workApp'));
         }else{
         // work_applicationsテーブルのwork_idがない、あってもapprove_atに値があれば以下
             $work = Work::with('rests', 'user')->where('id', $id)->firstOrFail();

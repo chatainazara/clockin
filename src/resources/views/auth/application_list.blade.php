@@ -9,7 +9,6 @@
 <div class="content">
     <div class="content__inner">
         <h1 class="ttl">申請一覧</h1>
-
         <div class="content-list__tabs">
             <a href="/stamp_correction_request/list?status=pending"
                 class="content-list__tab {{ $status === 'pending' ? 'content-list__tab--active' : '' }}">
@@ -20,7 +19,6 @@
                 承認済み
             </a>
         </div>
-
         <table class="content-list__table">
             <thead>
                 <tr>

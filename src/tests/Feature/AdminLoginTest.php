@@ -41,7 +41,7 @@ class AdminLoginTest extends TestCase
             'password' => 'adminadmin',
         ];
         // ボタンを押す
-        $response = $this->post('/admin/login', $loginData);
+        $response = $this->post('/login', $loginData);
         // バリデーションを期待
         $response->assertSessionHasErrors('email');
         $this->assertEquals('メールアドレスを入力してください', session('errors')->first('email'));
@@ -58,7 +58,7 @@ class AdminLoginTest extends TestCase
             'password' => '',
         ];
         // ボタンを押す
-        $response = $this->post('/admin/login', $loginData);
+        $response = $this->post('/login', $loginData);
         // バリデーションを期待
         $response->assertSessionHasErrors('password');
         $this->assertEquals('パスワードを入力してください', session('errors')->first('password'));
@@ -76,7 +76,7 @@ class AdminLoginTest extends TestCase
             'password' => 'adminadmin',
         ];
         // ボタンを押す
-        $response = $this->post('/admin/login', $loginData);
+        $response = $this->post('/login', $loginData);
         // バリデーションを期待
         $this->assertGuest();
         $response->assertSessionHasErrors('email');
@@ -88,7 +88,7 @@ class AdminLoginTest extends TestCase
             'password' => 'notadminadmin',
         ];
         // ボタンを押す
-        $response = $this->post('/admin/login', $loginData);
+        $response = $this->post('/login', $loginData);
         // バリデーションを期待
         $response->assertSessionHasErrors('password');
         $this->assertEquals('ログイン情報が登録されていません', session('errors')->first('password'));

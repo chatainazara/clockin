@@ -131,7 +131,7 @@ class StaffController extends Controller
                 ];
             }
         }
-        // --- CSV出力処理 ---
+        // CSV出力処理
         $filename = sprintf('%s_%s勤怠.csv', $user->name, $start->format('Y年m月'));
         $headers = [
             'Content-Type'        => 'text/csv; charset=UTF-8',

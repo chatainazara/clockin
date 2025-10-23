@@ -16,10 +16,9 @@ class ApplicationRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'work_id'                           => ['required', 'exists:works,id'],
             'work_application.clock_in_at'      => ['required', 'date_format:H:i'],
             'work_application.clock_out_at'     => ['required', 'date_format:H:i'],
-            'work_application.reason'           => ['required', 'string'],
+            'work_application.reason'           => ['required'],
             'rest_applications.*.rest_start_at' => ['nullable', 'date_format:H:i'],
             'rest_applications.*.rest_end_at'   => ['nullable', 'date_format:H:i'],
         ];
@@ -43,11 +42,9 @@ class ApplicationRequest extends FormRequest
         $validator->after(function ($validator) {
             $clockIn  = $this->input('work_application.clock_in_at');
             $clockOut = $this->input('work_application.clock_out_at');
-
             if ($clockIn && $clockOut) {
                 $in  = Carbon::createFromFormat('H:i', $clockIn);
                 $out = Carbon::createFromFormat('H:i', $clockOut);
-
                 // 出勤・退勤の前後関係
                 if ($in->gte($out)) {
                     $validator->errors()->add(
@@ -55,7 +52,6 @@ class ApplicationRequest extends FormRequest
                         '出勤時間もしくは退勤時間が不適切な値です'
                     );
                 }
-
                 $rests = [];
                 foreach ($this->input('rest_applications', []) as $index => $rest) {
                     $restStart = !empty($rest['rest_start_at'])
@@ -64,7 +60,6 @@ class ApplicationRequest extends FormRequest
                     $restEnd = !empty($rest['rest_end_at'])
                         ? Carbon::createFromFormat('H:i', $rest['rest_end_at'])
                         : null;
-
                     // 出退勤と比較
                     if ($restStart && ($restStart->lt($in) || $restStart->gt($out))) {
                         $validator->errors()->add(
@@ -84,8 +79,7 @@ class ApplicationRequest extends FormRequest
                             '休憩時間の終了が開始より前になっています'
                         );
                     }
-
-                    // ★ 重複判定用に配列へ格納
+                    // 重複判定用に配列へ格納
                     if ($restStart && $restEnd) {
                         $rests[] = [
                             'index' => $index,
@@ -94,13 +88,11 @@ class ApplicationRequest extends FormRequest
                         ];
                     }
                 }
-
-                // ★ 休憩同士の重複チェック
+                // 休憩同士の重複チェック
                 for ($i = 0; $i < count($rests); $i++) {
                     for ($j = $i + 1; $j < count($rests); $j++) {
                         $a = $rests[$i];
                         $b = $rests[$j];
-
                         // AとBが重なっているか判定
                         if ($a['start']->lt($b['end']) && $b['start']->lt($a['end'])) {
                             $validator->errors()->add(
@@ -116,14 +108,6 @@ class ApplicationRequest extends FormRequest
                 }
             }
 
-            // 備考必須チェック
-            if (empty($this->input('work_application.reason'))) {
-                $validator->errors()->add(
-                    'work_application.reason',
-                    '備考を記入してください'
-                );
-            }
         });
     }
-
 }

@@ -17,12 +17,12 @@
 3. cp .env.example .env
 
 4. .env に以下の環境変数を追加または変更
-DB_CONNECTION=mysql  
-DB_HOST=mysql  
-DB_PORT=3306  
-DB_DATABASE=laravel_db  
-DB_USERNAME=laravel_user  
-DB_PASSWORD=laravel_pass  
+   DB_CONNECTION=mysql  
+   DB_HOST=mysql  
+   DB_PORT=3306  
+   DB_DATABASE=laravel_db  
+   DB_USERNAME=laravel_user  
+   DB_PASSWORD=laravel_pass
 
 MAIL_MAILER=smtp  
 MAIL_HOST=mailhog  
@@ -31,7 +31,7 @@ MAIL_USERNAME=null
 MAIL_PASSWORD=null  
 MAIL_ENCRYPTION=null  
 MAIL_FROM_ADDRESS="noreply@example.com"  
-MAIL_FROM_NAME="${APP_NAME}"  
+MAIL_FROM_NAME="${APP_NAME}"
 
 5. アプリケーションキーの作成
    php artisan key:generate
@@ -40,34 +40,35 @@ MAIL_FROM_NAME="${APP_NAME}"
    php artisan migrate
 
 7. シーディングの実行
-   php artisan db:seed
+   php artisan db:seed  
+   (role:admin email:admin@sakamaki-forest.com password:adminadmin に設定しています)
 
 ### テストの実行
 
-1. Mysqlコンテナに入る
-    docker-compose exec mysql bash
+1. Mysql コンテナに入る
+   docker-compose exec mysql bash
 
-2. MySQLコンテナ上
-    $ mysql -u root -p
-    パスワードを聞かれたら root
+2. MySQL コンテナ上
+   $ mysql -u root -p
+   パスワードを聞かれたら root
 
 3. テスト用データベースを作成
-    CREATE DATABASE demo_test;
+   CREATE DATABASE demo_test;
 
-4. phpコンテナで本アプリのテストを一度に実行
+4. php コンテナで本アプリのテストを一度に実行
    vendor/bin/phpunit tests/Feature
 
 ## 使用技術(実行環境)
 
 1. PHP: 8.1.33
 2. Laravel: 8.83.29
-3. MySQL: 8.0.2
+3. MySQL: 8.0.26
 4. nginx: 1.21.1
 5. mailhog: 1.0.1
 
 ## ER 図
 
-![ER図](src/document/ER_diagram.drowio.png)
+![ER図](src/document/ER_diagram.png)
 
 ## URL
 

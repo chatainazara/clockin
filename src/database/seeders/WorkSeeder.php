@@ -13,26 +13,22 @@ class WorkSeeder extends Seeder
 {
     public function run()
     {
-        // 直近5ヶ月分の期間
+        // 直近4ヶ月分の期間
         $startDate = Carbon::today()->subMonths(5)->startOfMonth();
-        $endDate   = Carbon::today()->endOfMonth();
+        $endDate   = Carbon::today()->subDay();
         $period    = CarbonPeriod::create($startDate, $endDate);
-
-        // 先頭6人のユーザー
-        $users = User::take(6)->get();
-
+        // 先頭7人のユーザー
+        $users = User::take(7)->get();
         foreach ($users as $user) {
             foreach ($period as $date) {
                 // 土日祝を除外
                 if ($date->isWeekend() || HolidayJp::isHoliday($date)) {
                     continue;
                 }
-
                 // 90%の確率でif内の処理を実行する
                 if (rand(1, 10) <= 9) {
                     $start = $date->copy()->setHour(8)->addMinutes(rand(0, 30));
                     $end   = $date->copy()->setHour(16)->addMinutes(rand(30, 90));
-
                     Work::factory()->create([
                         'user_id'      => $user->id,
                         'work_date'    => $date->toDateString(),
