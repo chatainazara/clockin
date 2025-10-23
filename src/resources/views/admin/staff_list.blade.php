@@ -8,7 +8,6 @@
 <div class="content">
     <div class="content__inner">
         <h1 class="ttl">スタッフ一覧</h1>
-
         <table class="content-list__table">
             <thead class="content-list__table-inner">
                 <tr class="content-list__row">

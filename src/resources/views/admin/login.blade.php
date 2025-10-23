@@ -9,8 +9,9 @@
     <div class="login-form__heading">
         <h1 class="login-form__title">管理者ログイン</h1>
     </div>
-    <form class="form" action="/admin/login" method="post" novalidate>
+    <form class="form" action="/login" method="post" novalidate>
         @csrf
+        <input type="hidden" name="is_admin" value="1">
         <div class="form__group">
             <div class="form__group-title">
                 <h2 class="form__label--item">メールアドレス</h2>

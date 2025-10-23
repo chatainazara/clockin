@@ -11,17 +11,14 @@
         <form class="attendance__form" method="POST" action="/attendance/detail/{{$work->id}}">
             @csrf
             <input type="hidden" name="work_id" value="{{ $work->id }}">
-
             <div class="content__row">
                 <div class="content__label">名前</div>
                 <div class="content__value">{{ $work->user->name }}</div>
             </div>
-
             <div class="content__row">
                 <div class="content__label">日付</div>
                 <div class="content__value">{{ \Carbon\Carbon::parse($work->work_date)->format('Y年n月j日') }}</div>
             </div>
-
             {{-- 出退勤修正申請 --}}
             <div class="content__row">
                 <div class="content__label">出勤・退勤</div>
@@ -39,7 +36,6 @@
             @error('work_application.clock_out_at')
                 <div class="error">{{ $message }}</div>
             @enderror
-
             {{-- 既存休憩の修正申請 --}}
             @foreach($work->rests as $index => $rest)
             <div class="content__row">
@@ -60,7 +56,6 @@
                 <div class="error">{{ $message }}</div>
             @enderror
             @endforeach
-
             {{-- 新規追加用休憩 --}}
             <div class="content__row">
                 <div class="content__label">休憩{{ $work->rests->count() + 1 }}</div>
@@ -77,7 +72,6 @@
             @error("rest_applications." . $work->rests->count() . ".rest_end_at")
                 <div class="error">{{ $message }}</div>
             @enderror
-
             {{-- 備考 --}}
             <div class="content__row">
                 <div class="content__label">備考</div>

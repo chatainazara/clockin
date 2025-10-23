@@ -10,9 +10,7 @@
                 登録していただいたメールアドレスに認証メールを送付しました。
             </br>メール認証を完了してください。
             </p>
-
-                <a class="content__link" href="http://localhost:8025/">認証はこちらから</a>
-
+            <a class="content__link" href="http://localhost:8025/">認証はこちらから</a>
             <form class="content__form" method="POST" action="{{ route('verification.send') }}">
                 @csrf
                 <button class="content__form--button" type="submit">認証メールを再送する</button>

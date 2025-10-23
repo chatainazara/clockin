@@ -14,7 +14,6 @@
                 <div class="content__label">名前</div>
                 <div class="content__value">{{ $workApp->work->user->name }}</div>
             </div>
-
             {{-- 日付 --}}
             <div class="content__row">
                 <div class="content__label">日付</div>
@@ -27,21 +26,19 @@
                     {{ optional(\Carbon\Carbon::parse($workApp->work->work_date))->format('n月j日') }}
                 </div>
             </div>
-
             {{-- 出退勤 --}}
             <div class="content__row">
                 <div class="content__label">出勤・退勤</div>
                 <div class="content__value clockInOut">
-                {{ $workApp->work->clock_in_at ? optional(\Carbon\Carbon::parse($workApp->work->clock_in_at))->format('H:i') : '未入力' }}
+                {{ $workApp->clock_in_at ? optional(\Carbon\Carbon::parse($workApp->clock_in_at))->format('H:i') : '未入力' }}
                 </div>
                 <div class="content__value clockInOut">
                 〜
                 </div>
                 <div class="content__value clockInOut">
-                {{ $workApp->work->clock_out_at ? optional(\Carbon\Carbon::parse($workApp->work->clock_out_at))->format('H:i') : '未入力' }}
+                {{ $workApp->clock_out_at ? optional(\Carbon\Carbon::parse($workApp->clock_out_at))->format('H:i') : '未入力' }}
                 </div>
             </div>
-
             {{-- 休憩一覧 --}}
             <div id="rests">
                 @php $restIndex = 1; @endphp
@@ -62,12 +59,10 @@
                         <div class="content__value">
                             {{ $end }}
                         </div>
-
                     </div>
                     @php $restIndex++; @endphp
                 @endforeach
             </div>
-
             {{-- 備考 --}}
             <div class="content__row">
                 <div class="content__label">備考</div>
@@ -76,16 +71,16 @@
                 </div>
             </div>
         </div>
-            {{-- 承認ボタン --}}
-            <div class="actions">
-                @if($workApp->approve_at)
-                    <button class="button2" disabled>承認済み</button>
-                @else
-                    <button id="approveBtn" class="button" data-route="/work_applications/{{$workApp->id}}/approve">
-                        承認
-                    </button>
-                @endif
-            </div>
+        {{-- 承認ボタン --}}
+        <div class="actions">
+            @if($workApp->approve_at)
+                <button class="button2" disabled>承認済み</button>
+            @else
+                <button id="approveBtn" class="button" data-route="/work_applications/{{$workApp->id}}/approve">
+                    承認
+                </button>
+            @endif
+        </div>
     </div>
 </div>
 

@@ -42,11 +42,9 @@ class FixRequest extends FormRequest
         $validator->after(function ($validator) {
             $clockIn  = $this->input('work_fix.clock_in_at');
             $clockOut = $this->input('work_fix.clock_out_at');
-
             if ($clockIn && $clockOut) {
                 $in  = Carbon::createFromFormat('H:i', $clockIn);
                 $out = Carbon::createFromFormat('H:i', $clockOut);
-
                 // 出勤・退勤の前後関係
                 if ($in->gte($out)) {
                     $validator->errors()->add(
@@ -54,7 +52,6 @@ class FixRequest extends FormRequest
                         '出勤時間もしくは退勤時間が不適切な値です'
                     );
                 }
-
                 $rests = [];
                 foreach ($this->input('rest_fixes', []) as $index => $restFix) {
                     $restStart = !empty($restFix['rest_start_at'])
@@ -63,7 +60,6 @@ class FixRequest extends FormRequest
                     $restEnd = !empty($restFix['rest_end_at'])
                         ? Carbon::createFromFormat('H:i', $restFix['rest_end_at'])
                         : null;
-
                     // 出退勤と比較
                     if ($restStart && ($restStart->lt($in) || $restStart->gt($out))) {
                         $validator->errors()->add(
@@ -83,8 +79,7 @@ class FixRequest extends FormRequest
                             '休憩時間の終了が開始より前になっています'
                         );
                     }
-
-                    // ★ 重複判定用に配列へ格納
+                    // 重複判定用に配列へ格納
                     if ($restStart && $restEnd) {
                         $rests[] = [
                             'index' => $index,
@@ -93,13 +88,11 @@ class FixRequest extends FormRequest
                         ];
                     }
                 }
-
-                // ★ 休憩同士の重複チェック
+                // 休憩同士の重複チェック
                 for ($i = 0; $i < count($rests); $i++) {
                     for ($j = $i + 1; $j < count($rests); $j++) {
                         $a = $rests[$i];
                         $b = $rests[$j];
-
                         // AとBが重なっているか判定
                         if ($a['start']->lt($b['end']) && $b['start']->lt($a['end'])) {
                             $validator->errors()->add(
@@ -114,7 +107,6 @@ class FixRequest extends FormRequest
                     }
                 }
             }
-
             // 備考必須チェック
             if (empty($this->input('work_fix.remark'))) {
                 $validator->errors()->add(
@@ -124,5 +116,4 @@ class FixRequest extends FormRequest
             }
         });
     }
-
 }

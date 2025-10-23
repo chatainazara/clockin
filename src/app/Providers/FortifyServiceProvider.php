@@ -52,8 +52,7 @@ class FortifyServiceProvider extends ServiceProvider
             public function toResponse($request){
                  // 登録直後フラグをセッションにセット
                 session(['just_registered' => true]);
-                return redirect()->route('verification.notice')
-                        ->with('status', '登録ありがとうございます。メール認証を完了してください。');
+                return redirect()->route('verification.notice');
             }
         });
     }
@@ -85,10 +84,10 @@ class FortifyServiceProvider extends ServiceProvider
             if (!$user || !Hash::check($request->password, $user->password)) {
                 return null;
             }
-            if ($request->is('admin/login') && $user->role === 'admin') {
+            if ($request->has('is_admin') && $user->role === 'admin') {
                 return $user;
             }
-            if ($request->is('login') && $user->role === 'user') {
+            if (!$request->has('is_admin') && $user->role === 'user') {
                 return $user;
             }
             return null; // role が一致しない場合はログイン不可

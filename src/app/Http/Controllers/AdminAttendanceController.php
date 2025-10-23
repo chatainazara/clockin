@@ -15,7 +15,6 @@ class AdminAttendanceController extends Controller
         $date = $request->input('date')
             ? Carbon::parse($request->input('date'))
             : Carbon::today();
-
         // 当日の勤怠データを取得
         $works = Work::with(['user', 'rests'])
             ->whereDate('work_date', $date)
@@ -67,11 +66,8 @@ class AdminAttendanceController extends Controller
         $allRests = [];
         // 休憩反映
         foreach ($request->rest_fixes as $restFix) {
-            // dd($request->rest_fixes);
-            // dd($restFix);
-            if ($restFix['rest_id']) { // 既存
+            if ($restFix['rest_id']) {
                 $rest = $work->rests()->find($restFix['rest_id']);
-                // if ($rest) {
                 $rest->update([
                     'rest_start_at' => Carbon::parse($restFix['rest_start_at']),
                     'rest_end_at' => Carbon::parse($restFix['rest_end_at']),
@@ -81,17 +77,11 @@ class AdminAttendanceController extends Controller
                     'rest_start_at' => $restFix['rest_start_at'] ? Carbon::parse($restFix['rest_start_at'])->format('H:i') : null,
                     'rest_end_at' => $restFix['rest_end_at'] ? Carbon::parse($restFix['rest_end_at'])->format('H:i') : null,
                 ];
-                // }
             } elseif($restFix['rest_start_at'] && $restFix['rest_end_at']) { // 新規
                 $newRest = $work->rests()->create([
                     'rest_start_at' => $restFix['rest_start_at'],
                     'rest_end_at' => $restFix['rest_end_at'],
                 ]);
-                // $allRests[] = [
-                //     'id' => $newRest->id,
-                //     'rest_start_at' => $newRest->rest_start_at ? Carbon::parse($newRest->rest_start_at)->format('H:i') : null,
-                //     'rest_end_at' => $newRest->rest_end_at ? Carbon::parse($newRest->rest_end_at)->format('H:i') : null,
-                // ];
             }
         }
         $work = Work::with('rests')->findOrFail($id);

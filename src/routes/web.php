@@ -22,27 +22,36 @@ use App\Http\Controllers\StaffController;
 
 // 一般ユーザーが使うルート
 Route::middleware(['auth', 'role:user'])->group(function () {
+    // 打刻画面
     Route::get('/attendance', [AttendanceController::class,'register']);
     Route::post('/attendance/action', [AttendanceController::class, 'action']);
+    // 勤怠一覧画面
     Route::get('/attendance/list', [AttendanceController::class,'list']);
+    // 勤怠詳細画面
     Route::get('/attendance/detail/{id}', [AttendanceController::class,'detailShow']);
     Route::post('/attendance/detail/{id}', [WorkApplicationController::class,'application']);
+    // 申請一覧画面
     Route::get('/stamp_correction_request/list', function () {});
 });
 
 // 管理者が使うルート
 Route::get('/admin/login', function () {return view('admin.login');})->middleware('guest');
-Route::post('/admin/login', [AuthenticatedSessionController::class, 'store'])->middleware('guest');
 Route::middleware(['auth','role:admin'])->group(function () {
+    // 勤怠一覧画面（トップ画面）
     Route::get('/admin/attendance/list', [AdminAttendanceController::class, 'list']);
+    // 勤怠詳細ページ
     Route::get('/admin/attendance/{id}',  [AdminAttendanceController::class, 'show']);
     Route::post('/admin/attendance/{id}',  [AdminAttendanceController::class, 'fix']);
-    Route::post('/work_applications/{id}/approve', [WorkApplicationController::class, 'approve']);
+    // スタッフ一覧
     Route::get('/admin/staff/list', [StaffController::class, 'list']);
+    // スタッフ詳細
     Route::get('/admin/attendance/staff/{id}',  [StaffController::class, 'detail']);
     Route::post('/admin/attendance/staff/{id}',  [StaffController::class, 'csv']);
+    // 申請一覧
     Route::get('/stamp_correction_request/list', function () {});//一般ユーザーと同じパスを使用
     Route::get('/stamp_correction_request/approve/{attendance_correct_request_id}', [WorkApplicationController::class,'approveView']);
+    // JSを使った承認
+    Route::post('/work_applications/{id}/approve', [WorkApplicationController::class, 'approve']);
 });
 
 // mailhogによる認証ルート

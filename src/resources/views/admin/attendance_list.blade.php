@@ -8,7 +8,6 @@
 <div class="attendance">
     <div class="attendance__inner">
         <h1 class="ttl">{{ $date->format('Y年n月j日') }}の勤怠</h1>
-
         <div class="attendance__header">
             {{-- 前日ボタン --}}
             <a class="pagenate" href="/admin/attendance/list?date={{ $date->copy()->subDay()->toDateString() }}" >&larr; 前日</a>
@@ -26,7 +25,6 @@
             {{-- 翌日ボタン --}}
             <a class="pagenate" href="/admin/attendance/list?date={{ $date->copy()->addDay()->toDateString() }}">翌日 &rarr;</a>
         </div>
-
         <table class="attendance__table">
             <thead>
                 <tr>
