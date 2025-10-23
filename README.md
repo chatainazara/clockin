@@ -16,7 +16,7 @@
 
 3. cp .env.example .env
 
-4. .env に以下の環境変数を追加または変更
+4. .env に以下の環境変数を追加または変更  
    DB_CONNECTION=mysql  
    DB_HOST=mysql  
    DB_PORT=3306  
